@@ -14,6 +14,17 @@ const handler = NextAuth({
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async session({ session, token }) {
+      session.user.id = token.sub;
+      return session;
+    }
+  },
+  pages: {
+    signIn: '/',
+    signOut: '/',
+    error: '/',
+  }
 });
 
 export { handler as GET, handler as POST };
